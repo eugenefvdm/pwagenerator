@@ -29,7 +29,7 @@ class PWAGeneratorController extends Controller
         $width = $request->input('width');
         $height = $request->input('height', $width);
 
-        // Create temporary SVG file
+        // Create a temporary SVG file
         $tempSvg = tempnam(sys_get_temp_dir(), 'svg_');
         file_put_contents($tempSvg, $svgContent);
 
@@ -39,7 +39,7 @@ class PWAGeneratorController extends Controller
         $imagick->readImage($tempSvg);
         $imagick->setImageFormat('png');
 
-        // Create temporary PNG file
+        // Create a temporary PNG file
         $tempPng = tempnam(sys_get_temp_dir(), 'png_');
         $imagick->writeImage($tempPng);
 
@@ -47,19 +47,55 @@ class PWAGeneratorController extends Controller
         $image = Image::make($tempPng);
 
         if ($type === 'icon') {
-            $image->resize($width, $width);
+            // Resize maintaining aspect ratio to fit within bounds
+            $image->resize($width, $width, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+
+            // Create a square canvas and center the image
+            $canvas = Image::canvas($width, $width, '#ffffff');
+            $x = max(0, ($width - $image->width()) / 2);
+            $y = max(0, ($width - $image->height()) / 2);
+
+            $canvas->insert($image, 'top-left', (int)$x, (int)$y);
+            $image = $canvas;
+
             $filename = "icon-{$width}x{$width}.png";
         } else {
+
+//        if ($type === 'icon') {
+//            // Resize maintaining the aspect ratio and ensure it fits within the bounds
+//            $image->resize($width, $width, function ($constraint) {
+//                $constraint->aspectRatio();
+//                $constraint->upsize();
+//            });
+//
+//            // Create a square canvas of the target size
+//            $canvas = Image::canvas($width, $width, 'transparent');
+//
+//            // Center the resized image on the canvas
+//            $x = ($width - $image->width()) / 2;
+//            $y = ($width - $image->height()) / 2;
+//            $canvas->insert($image, 'top-left', (int)$x, (int)$y);
+//            $image = $canvas;
+//
+//            $filename = "icon-{$width}x{$width}.png";
+//        } else {
             // Create white canvas for splash screen
             $canvas = Image::canvas($width, $height, '#ffffff');
 
-            // Calculate icon size and position
+            // Calculate icon size while maintaining aspect ratio
             $iconSize = min($width, $height) * 0.4;
-            $x = ($width - $iconSize) / 2;
-            $y = ($height - $iconSize) / 2;
+            $image->resize($iconSize, $iconSize, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
 
-            // Resize icon and place it on canvas
-            $image->resize($iconSize, $iconSize);
+            // Center the image on the canvas
+            $x = ($width - $image->width()) / 2;
+            $y = ($height - $image->height()) / 2;
+
             $canvas->insert($image, 'top-left', (int)$x, (int)$y);
             $image = $canvas;
             $filename = "splash-{$width}x{$height}.png";
