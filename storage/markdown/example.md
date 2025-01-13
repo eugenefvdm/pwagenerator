@@ -235,8 +235,8 @@
     }
 ```
 # Manifest.json
-```json
 
-```
+Coming up, how the `Manifest.json` file is generated.
+
 
 
