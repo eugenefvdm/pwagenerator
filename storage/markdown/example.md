@@ -1,6 +1,6 @@
 # Example Code
 - [Example Code](#example-code)
-- [Filament AdminPanelProvder](#filament-adminpanelprovder)
+- [Filament AdminPanelProvider](#filament-adminpanelprovider)
 - [Tenant Model](#tenant-model)
 - [User Model](#user-model)
 - [Apply Tenant Scopes](#apply-tenant-scopes)
@@ -8,7 +8,7 @@
 - [EditExistingTenantProfile::class](#editexistingtenantprofileclass)
 - [AppServiceProvider](#appserviceprovider)
 - [Manifest.json](#manifestjson)
-# Filament AdminPanelProvder
+# Filament AdminPanelProvider
 ```php
     ->tenant(Tenant::class)
     ->tenantRegistration(RegisterNewTenant::class)
