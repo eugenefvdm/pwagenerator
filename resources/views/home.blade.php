@@ -10,12 +10,14 @@
     <h1 class="text-2xl font-bold mb-4">PWA Helpers for Laravel</h1>
     This is a set of helpers for developing PWA applications using Laravel and Filament.<br>
     <br>
-    There is example code, and then there is a tool for generating icons and splash screens. The icon and splash screens can also be generated using Icon Genie:<br>
-    https://quasar.dev/icongenie/installation
+    There is example code, and then there is a tool for generating icons and splash screens.<br>
+    <br>
+    The icon and splash screens may also be generated using Icon Genie:<br>
+    <a href="https://quasar.dev/icongenie/installation" class="hover:underline">https://quasar.dev/icongenie/installation</a>
     <br>
     <br>
 
-    <h2 class="text-xl font-bold mb-4"><a href='/markdown/example'>Example Laravel and Filament Code
+    <h2 class="text-xl font-bold mb-4"><a href='/markdown/example' class="hover:underline">Example Laravel and Filament Code
     </a></h2>
 
     <h2 class="text-xl font-bold mb-4">Icons and Splash Screens Generator</h1>

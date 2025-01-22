@@ -42,7 +42,7 @@ class PWAGeneratorController extends Controller
 
     public function index()
     {
-        return view('pwa-generator', [
+        return view('home', [
             'iconSizes' => $this->iconSizes,
             'splashSizes' => $this->splashSizes
         ]);
