@@ -23,6 +23,11 @@
 
     <h2 class="text-xl font-bold mb-4">Icons and Splash Screens Generator</h1>
 
+    <div class="mb-4">
+        <label for="backgroundInput" class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+        <input type="text" id="backgroundInput" class="w-full p-2 border rounded" placeholder="Enter background color (e.g., #ffffff, transparent, red)" value="transparent">
+    </div>
+
     <textarea id="svgInput" class="w-full h-32 p-2 mb-4 border rounded" placeholder="Paste your SVG code here..."></textarea>
 
     <div class="space-y-4">
@@ -53,6 +58,7 @@
 <script>
     function generate(type, width, height = width) {
         const svg = document.getElementById('svgInput').value;
+        const background = document.getElementById('backgroundInput').value;
         if (!svg) return;
 
         fetch('/generate', {
@@ -61,7 +67,7 @@
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
             },
-            body: JSON.stringify({ svg, type, width, height })
+            body: JSON.stringify({ svg, type, width, height, background })
         })
             .then(response => response.blob())
             .then(blob => {

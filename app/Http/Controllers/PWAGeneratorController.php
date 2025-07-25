@@ -57,6 +57,7 @@ class PWAGeneratorController extends Controller
         $type = $request->input('type');
         $width = $request->input('width');
         $height = $request->input('height', $width);
+        $background = $request->input('background', 'transparent');
 
         // Create a temporary SVG file
         $tempSvg = tempnam(sys_get_temp_dir(), 'svg_');
@@ -83,7 +84,7 @@ class PWAGeneratorController extends Controller
             });
 
             // Create a square canvas and center the image
-            $canvas = Image::canvas($width, $width);
+            $canvas = Image::canvas($width, $width, $background); // Removed '#ffffff' as 3rd parameter to make it transparent
             $x = max(0, ($width - $image->width()) / 2);
             $y = max(0, ($width - $image->height()) / 2);
 
@@ -93,7 +94,7 @@ class PWAGeneratorController extends Controller
             $filename = "icon-{$width}x$width.png";
         } else {
             // Create white canvas for splash screen
-            $canvas = Image::canvas($width, $height, '#ffffff');
+            $canvas = Image::canvas($width, $height, $background); // Removed '#ffffff' as 3rd parameter to make it transparent
 
             // Calculate icon size while maintaining the aspect ratio
             $iconSize = min($width, $height) * 0.4;
