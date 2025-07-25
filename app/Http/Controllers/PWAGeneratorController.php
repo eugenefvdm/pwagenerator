@@ -83,7 +83,7 @@ class PWAGeneratorController extends Controller
             });
 
             // Create a square canvas and center the image
-            $canvas = Image::canvas($width, $width, '#ffffff');
+            $canvas = Image::canvas($width, $width);
             $x = max(0, ($width - $image->width()) / 2);
             $y = max(0, ($width - $image->height()) / 2);
 
